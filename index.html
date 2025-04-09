@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculateur de marge proportionnelle</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #f4f4f4;
+      border-radius: 12px;
+    }
+    input, select, button {
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    h1 {
+      text-align: center;
+    }
+    .result {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: white;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>📐 Calculateur de marge proportionnelle</h1>
+  <label>Largeur du format initial :</label>
+  <input type="number" id="baseWidth" placeholder="ex: 1920" />
+
+  <label>Hauteur du format initial :</label>
+  <input type="number" id="baseHeight" placeholder="ex: 1080" />
+
+  <label>Marge initiale (px) :</label>
+  <input type="number" id="baseMargin" placeholder="ex: 30" />
+
+  <label>Type de marge :</label>
+  <select id="marginType">
+    <option value="width">Horizontale (par rapport à la largeur)</option>
+    <option value="height">Verticale (par rapport à la hauteur)</option>
+  </select>
+
+  <label>Nouvelle largeur :</label>
+  <input type="number" id="newWidth" placeholder="ex: 1280" />
+
+  <label>Nouvelle hauteur :</label>
+  <input type="number" id="newHeight" placeholder="ex: 720" />
+
+  <button onclick="calculateMargin()">Calculer</button>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    function calculateMargin() {
+      const baseWidth = parseFloat(document.getElementById("baseWidth").value);
+      const baseHeight = parseFloat(document.getElementById("baseHeight").value);
+      const baseMargin = parseFloat(document.getElementById("baseMargin").value);
+      const marginType = document.getElementById("marginType").value;
+      const newWidth = parseFloat(document.getElementById("newWidth").value);
+      const newHeight = parseFloat(document.getElementById("newHeight").value);
+
+      let scale = 1;
+      if (marginType === "width") {
+        scale = newWidth / baseWidth;
+      } else {
+        scale = newHeight / baseHeight;
+      }
+
+      const newMargin = (baseMargin * scale).toFixed(2);
+      document.getElementById("result").innerText = `➡️ Nouvelle marge : ${newMargin} px`;
+    }
+  </script>
+</body>
+</html>
